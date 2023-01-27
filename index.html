@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>Simple Calculator</title>
+        <style>
+            #body{
+                max-width: 400px;
+                border: 1px solid green;
+            }
+            div{
+                margin: auto;
+            }
+            #display2 {
+                float: right;
+            }
+            .operator{
+                width: 75px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="body">
+            <div class="row"><input id="display1" type="text" oninput="updateInput1(event)"><input id="display2" type="text" oninput="updateInput2(event)"></div>
+            <div class="row">
+                <button id="1" class="center" onclick="clearInput(event)">Clear</button>
+                <button id="2" class="center" onclick="clearInput(event)" style="float:right">Clear</button>
+            </div>
+            <p id="ans">Answer:</p>
+            <div class="row" style="display:flex; justify-content:center">
+                <button id="/" class="operator" onclick="buttonHandler(event)"><h4><b>/</b></h4></button>
+                <button id="*" class="operator" onclick="buttonHandler(event)"><h4><b>*</b></h4></button>
+                <button id="-" class="operator" onclick="buttonHandler(event)"><h4><b>-</b></h4></button>
+                <button id="+" class="operator" onclick="buttonHandler(event)"><h4><b>+</b></h4></button>
+            </div>
+            <ul id="history"></ul>
+        </div>
+    </body>
+    <script>
+        let input1 = "";
+        let input2 = "";
+        let answ = "";
+        let history = [];
+
+        function updateInput1(e = new Event()){
+            const val = e.target.value;
+            if(val.search(/\D/g) < 0){
+                input1 = val;
+            }else{
+                alert("Numbers Only");
+                e.target.value = val.slice(0, -1);
+            }
+        }
+
+        function updateInput2(e = new Event()){
+            const val = e.target.value;
+            if(val.search(/\D/g) < 0){
+                input2 = val;
+            }else{
+                alert("Numbers Only");
+                e.target.value = val.slice(0, -1);
+            }
+        }
+
+        function buttonHandler(e = new Event()){
+            const op = e.target.id;
+            if(input1.length === 0 | input2.length === 0){alert("Both fields need numbers");return}
+            switch(op){
+                case "/":
+                    if(Number(input1) < 1 | input1.length === 0){alert("Can not divide by zero");return}
+                    answ = input1/input2;
+                    break;
+                case "*":
+                    answ = input1*input2;
+                    break;
+                case "-":
+                    answ = input1-input2;
+                    break;
+                case "+":
+                    answ = Number(input1)+Number(input2);
+                    break;
+            }
+            const an = document.getElementById("ans");
+            an.innerText = "Answer = " + answ;
+            history.push(input1 + " " + op + " " + input2 + " " + "= " + answ);
+            updateHistory();
+        }
+        
+        function updateHistory(){
+            let hlist = document.getElementById("history");
+            hlist.innerHTML = "";
+            for(const h of history){
+                const li = document.createElement('li');
+                li.innerText = h;
+                hlist.appendChild(li);
+            }
+        }
+
+        function clearInput(e = new Event()){
+            const input = e.target.id;
+            if(input == "1"){
+                const el = document.getElementById("display1");
+                el.value = "";
+                input1 = "";
+            }else{
+                const el = document.getElementById("display2");
+                el.value = "";
+                input2 = "";
+            }
+            const an = document.getElementById("ans");
+            an.innerText = "Answer = ";
+        }
+    </script>
+</html>
