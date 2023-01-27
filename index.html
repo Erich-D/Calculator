@@ -83,6 +83,7 @@
             an.innerText = "Answer = " + answ;
             history.push(input1 + " " + op + " " + input2 + " " + "= " + answ);
             updateHistory();
+            clearAll();
         }
         
         function updateHistory(){
@@ -109,5 +110,17 @@
             const an = document.getElementById("ans");
             an.innerText = "Answer = ";
         }
+
+        function clearAll(){
+            const el = document.getElementById("display1");
+            el.value = "";
+            input1 = "";
+            const el2 = document.getElementById("display2");
+            el2.value = "";
+            input2 = "";
+            const an = document.getElementById("ans");
+            an.innerText = "Answer = ";
+        }
+
     </script>
 </html>
