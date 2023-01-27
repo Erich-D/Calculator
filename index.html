@@ -80,7 +80,7 @@
                     break;
             }
             const an = document.getElementById("ans");
-            an.innerText = "Answer = " + answ;
+            an.innerText = "Answer = " + answ.toString();
             history.push(input1 + " " + op + " " + input2 + " " + "= " + answ);
             updateHistory();
             clearAll();
